@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b84ee850199abbc4d92cd6a0d0c4a1ca, type: 3}
-  m_Name: RatingSetup
+  m_Script: {fileID: 11500000, guid: 6f649194abf5e7c45b670d821c812147, type: 3}
+  m_Name: PlayerStateFalling
   m_EditorClassIdentifier: 
-  active: 1
-  counter: 6
-  lastCheck: 482721.61980174755
+  _maxSpeed: 3
+  _gravityMultiplier: 3
+  _maxRotationSpeed: 360
+  _landingState: {fileID: 11400000, guid: 1abbd806d38f214419be0363ca12b7c2, type: 2}

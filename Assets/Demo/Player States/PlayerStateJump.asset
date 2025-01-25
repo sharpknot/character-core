@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b84ee850199abbc4d92cd6a0d0c4a1ca, type: 3}
-  m_Name: RatingSetup
+  m_Script: {fileID: 11500000, guid: 31db3d1efaa0f5249b2ed70336f5d7e3, type: 3}
+  m_Name: PlayerStateJump
   m_EditorClassIdentifier: 
-  active: 1
-  counter: 6
-  lastCheck: 482721.61980174755
+  _maxSpeed: 3
+  _gravityMultiplier: 3
+  _maxRotationSpeed: 360
+  _jumpHeight: 3
+  _fallingState: {fileID: 11400000, guid: e086e079bfd51f94e9bd042de15c98a7, type: 2}

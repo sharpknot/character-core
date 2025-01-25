@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b84ee850199abbc4d92cd6a0d0c4a1ca, type: 3}
-  m_Name: RatingSetup
+  m_Script: {fileID: 11500000, guid: 30ee3f9b6d46c064f932efdfb943606e, type: 3}
+  m_Name: PlayerStateLanding
   m_EditorClassIdentifier: 
-  active: 1
-  counter: 6
-  lastCheck: 482721.61980174755
+  _landingDuration: 0.1
+  _gravityMultiplier: 2
