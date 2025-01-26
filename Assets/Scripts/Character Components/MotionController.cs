@@ -214,7 +214,7 @@ namespace Kabir.CharacterComponents
             if(right == Vector3.zero) return false;
 
             flatForward = fwd.normalized;
-            flatRight = fwd.normalized;
+            flatRight = right.normalized;
 
             return true;
         }

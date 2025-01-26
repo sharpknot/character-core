@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1087a7e174c5e284cba35f1171db840e, type: 3}
+  m_Name: PlayerMovement_1
+  m_EditorClassIdentifier: 
+  _blendList:
+  - <Clip>k__BackingField: {fileID: 3094330708855449807, guid: be17a10c1d508744d8462e86f5f5f7e9, type: 3}
+    <BlendPosition>k__BackingField: {x: 0, y: 0}
+    <ClipSpeed>k__BackingField: 1
+  - <Clip>k__BackingField: {fileID: 3094330708855449807, guid: da15c88b77bd46a4ab0a19439acf3bae, type: 3}
+    <BlendPosition>k__BackingField: {x: 0, y: 1}
+    <ClipSpeed>k__BackingField: 1.291
+  - <Clip>k__BackingField: {fileID: 3094330708855449807, guid: d9206ff426a977141a0b2856668c7f0d, type: 3}
+    <BlendPosition>k__BackingField: {x: 0, y: -1}
+    <ClipSpeed>k__BackingField: 1.291
+  - <Clip>k__BackingField: {fileID: 3094330708855449807, guid: 952eb3fa808b5a8478e2b217dd903338, type: 3}
+    <BlendPosition>k__BackingField: {x: -1, y: 0}
+    <ClipSpeed>k__BackingField: 2.581
+  - <Clip>k__BackingField: {fileID: 3094330708855449807, guid: 1c0ef478248b1be4aa940758f9d30074, type: 3}
+    <BlendPosition>k__BackingField: {x: 1, y: 0}
+    <ClipSpeed>k__BackingField: 2.581

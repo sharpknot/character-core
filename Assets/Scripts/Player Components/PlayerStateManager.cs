@@ -23,11 +23,9 @@ namespace Kabir.PlayerComponents
         }
         private PlayerInputMain _playerInput;
 
-        [field: SerializeField, Required]
-        public CameraManager CameraManager { get; private set; }
-
-        [field: SerializeField, Required]
-        public MotionController MotionController { get; private set; }
+        [field: SerializeField, Required] public CameraManager CameraManager { get; private set; }
+        [field: SerializeField, Required] public MotionController MotionController { get; private set; }
+        [field: SerializeField, Required] public PlayableManager PlayableManager { get; private set; }
 
         [field:SerializeField, ReadOnly, BoxGroup("Player States")]
         public PlayerStateBase CurrentState { get; private set; }
@@ -70,8 +68,6 @@ namespace Kabir.PlayerComponents
             if (state == null) return;
             CurrentState = Instantiate(state);
             CurrentState.StartState(this);
-
-            Debug.Log($"New state started: {state.name}");
         }
 
         public void AnimatorMove(Animator animator)

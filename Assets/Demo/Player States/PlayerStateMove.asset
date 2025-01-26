@@ -17,3 +17,6 @@ MonoBehaviour:
   _maxRotationSpeed: 480
   _fallingState: {fileID: 11400000, guid: e086e079bfd51f94e9bd042de15c98a7, type: 2}
   _jumpState: {fileID: 11400000, guid: af819bef8081cc244929c009d0bfc69e, type: 2}
+  _motionBlends:
+  - {fileID: 11400000, guid: 8722566ce0007a4409b2d1233557c238, type: 2}
+  - {fileID: 11400000, guid: 61b291cfb8d47f344a61960b7badc187, type: 2}
