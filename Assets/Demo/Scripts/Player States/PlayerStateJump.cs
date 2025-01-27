@@ -9,6 +9,7 @@ namespace Kabir.PlayerStates
     {
         [SerializeField] private float _maxSpeed = 5f, _gravityMultiplier = 2f, _maxRotationSpeed = 480f, _jumpHeight = 3f;
         [SerializeField] private PlayerStateBase _fallingState;
+        [SerializeField] private AnimationClip _jumpClip;
 
         private readonly float _minJumpDuration = 0.1f;
         private Sequence _minJumpSequence;
@@ -30,6 +31,9 @@ namespace Kabir.PlayerStates
             _minJumpSequence = DOTween.Sequence().
                 AppendInterval(_minJumpDuration).
                 AppendCallback(() => { _canFall = true; KillMinJumpSequence();});
+
+            _jumpClip.wrapMode = WrapMode.ClampForever;
+            StateManager.PlayableManager.StartSingleAnimation(_jumpClip, 0.1f, 1f);
         }
 
         public override void UpdateState(float deltaTime)
@@ -55,6 +59,7 @@ namespace Kabir.PlayerStates
 
         public override void StopState()
         {
+            StateManager.PlayableManager.StopSingleAnimation(0.1f);
             KillMinJumpSequence();
             base.StopState();
         }

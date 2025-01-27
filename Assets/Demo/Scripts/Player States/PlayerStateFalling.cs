@@ -8,6 +8,7 @@ namespace Kabir.PlayerStates
     {
         [SerializeField] private float _maxSpeed = 5f, _gravityMultiplier = 2f, _maxRotationSpeed = 480f;
         [SerializeField] private PlayerStateBase _landingState;
+        [SerializeField] private AnimationClip _clip;
         public override void StartState(PlayerStateManager stateManager)
         {
             base.StartState(stateManager);
@@ -15,6 +16,9 @@ namespace Kabir.PlayerStates
             StateManager.MotionController.GravityMultiplier = _gravityMultiplier;
             StateManager.MotionController.AutoEvaluate = true;
             StateManager.MotionController.FollowTerrainGradient = false;
+
+            _clip.wrapMode = WrapMode.Loop;
+            StateManager.PlayableManager.StartSingleAnimation(_clip, 0.3f, 1f);
         }
 
         public override void UpdateState(float deltaTime)
@@ -31,6 +35,12 @@ namespace Kabir.PlayerStates
             UpdateRotation(motion, _maxRotationSpeed);
 
             ApplyMotion(motion);
+        }
+
+        public override void StopState()
+        {
+            StateManager.PlayableManager.StopSingleAnimation(0.1f);
+            base.StopState();
         }
 
         private void StartLanding()

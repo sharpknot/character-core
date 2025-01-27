@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ee3f9b6d46c064f932efdfb943606e, type: 3}
   m_Name: PlayerStateLanding
   m_EditorClassIdentifier: 
-  _landingDuration: 0.1
   _gravityMultiplier: 2
+  _clip: {fileID: -5060625908618555442, guid: 2334818c05a4ee04f9aff0e6dd1a7851, type: 3}

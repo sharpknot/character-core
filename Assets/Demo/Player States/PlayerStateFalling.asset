@@ -16,3 +16,4 @@ MonoBehaviour:
   _gravityMultiplier: 3
   _maxRotationSpeed: 360
   _landingState: {fileID: 11400000, guid: 1abbd806d38f214419be0363ca12b7c2, type: 2}
+  _clip: {fileID: 3094330708855449807, guid: 917eb119d540c864b9e48440b89d0ea4, type: 3}

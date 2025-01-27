@@ -32,9 +32,10 @@ namespace Kabir.PlayerStates
 
             KillBlendSequence();
             _blendIndex = 0;
-            StateManager.PlayableManager.SetAnimationBlend(GetAnimationBlend());
+            StateManager.PlayableManager.SetCurrentAnimationBlend(GetAnimationBlend());
             _blendSequence = DOTween.Sequence().AppendInterval(Random.Range(3f, 5f)).AppendCallback(SetAnimationBlend);
-            
+
+            StateManager.PlayableManager.StopSingleAnimation(0.1f);
             StateManager.PlayableManager.SetBlendPosition(Vector2.zero);
         }
 
@@ -75,7 +76,7 @@ namespace Kabir.PlayerStates
             KillBlendSequence();
 
             AnimationBlends b = GetAnimationBlend();
-            StateManager.PlayableManager.SetAnimationBlend(b, 0.5f);
+            StateManager.PlayableManager.SetCurrentAnimationBlend(b, 0.5f);
 
             _blendSequence = DOTween.Sequence().AppendInterval(Random.Range(3f, 5f)).AppendCallback(SetAnimationBlend);
         }

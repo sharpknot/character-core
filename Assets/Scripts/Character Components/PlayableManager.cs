@@ -4,10 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.Animations;
-using UnityEngine.Events;
 using UnityEngine.Playables;
 using Kabir.ScriptableObjects;
-using UnityEngine.UIElements;
 
 namespace Kabir.CharacterComponents
 {
@@ -62,7 +60,8 @@ namespace Kabir.CharacterComponents
 
         private void OnDestroy()
         {
-            if(_animationBlendTransitionProcess != null) StopCoroutine(_animationBlendTransitionProcess);
+            if (_animationBlendTransitionProcess != null) StopCoroutine(_animationBlendTransitionProcess);
+            if (_singleAnimationBlendTransitionProcess != null) StopCoroutine(_singleAnimationBlendTransitionProcess);
 
             StopAllCoroutines();
 
@@ -138,14 +137,14 @@ namespace Kabir.CharacterComponents
         /// Sets a new animation blend
         /// </summary>
         /// <param name="blends"></param>
-        public void SetAnimationBlend(AnimationBlends blends) => SetAnimationBlend(blends, 0);
+        public void SetCurrentAnimationBlend(AnimationBlends blends) => SetCurrentAnimationBlend(blends, 0);
 
         /// <summary>
         /// Sets a new animation blend
         /// </summary>
         /// <param name="blends"></param>
         /// <param name="transitionDuration">Duration of the transition between current and new blend</param>
-        public void SetAnimationBlend(AnimationBlends blends, float transitionDuration)
+        public void SetCurrentAnimationBlend(AnimationBlends blends, float transitionDuration)
         {
             Initialize();
 
@@ -583,6 +582,176 @@ namespace Kabir.CharacterComponents
         }
 
         #endregion
+
+        #region Single Animation
+
+        private IEnumerator _singleAnimationBlendTransitionProcess;
+
+        /// <summary>
+        /// Starts a new clip animation playable
+        /// </summary>
+        /// <param name="clip"></param>
+        /// <param name="transitionDuration">Transition duration in seconds</param>
+        /// <param name="clipSpeed">Clip playback speed</param>
+        /// <returns>The playable applied</returns>
+        public AnimationClipPlayable StartSingleAnimation(AnimationClip clip, float transitionDuration, float clipSpeed)
+        {
+            Initialize();
+            AnimationClipPlayable playable = AnimationClipPlayable.Create(PlayableGraph, clip);
+            playable.SetSpeed(Mathf.Max(0f, clipSpeed));
+
+            return (AnimationClipPlayable)StartSingleAnimation(playable, transitionDuration);
+        }
+
+        /// <summary>
+        /// Start a new single playable
+        /// </summary>
+        /// <param name="playable"></param>
+        /// <param name="transitionDuration">Transition duration in seconds</param>
+        /// <returns>The playable applied</returns>
+        public Playable StartSingleAnimation(Playable playable, float transitionDuration)
+        {
+            Initialize();
+
+            if (_singleAnimationBlendTransitionProcess != null)
+                StopCoroutine(_singleAnimationBlendTransitionProcess);
+
+            _singleAnimationBlendTransitionProcess = SingleAnimStartTransition(playable, transitionDuration);
+            if (gameObject != null && gameObject.activeSelf)
+            {
+                StartCoroutine(_singleAnimationBlendTransitionProcess);
+            }
+
+            return playable;
+        }
+
+        /// <summary>
+        /// Stop the current single animation
+        /// </summary>
+        /// <param name="transitionDuration">Transition duration in seconds</param>
+        public void StopSingleAnimation(float transitionDuration)
+        {
+            Initialize();
+
+            if( _singleAnimationBlendTransitionProcess != null )
+                StopCoroutine( _singleAnimationBlendTransitionProcess );
+
+            _singleAnimationBlendTransitionProcess = SingleAnimStopTransition(transitionDuration);
+            if (gameObject != null && gameObject.activeSelf)
+            {
+                StartCoroutine( _singleAnimationBlendTransitionProcess );
+            }
+        }
+
+        private IEnumerator SingleAnimStartTransition(Playable playable, float transitionDuration)
+        {
+            // Add playable as input for single mixer (additional input)
+            int playableIndex = _singleAnimationMixer.GetInputCount();
+            _singleAnimationMixer.SetInputCount(playableIndex + 1);
+            _singleAnimationMixer.ConnectInput(playableIndex, playable, 0, 0f);
+
+            float singleMixerStartWeight = _standardMixer.GetInputWeight(1);
+            float currentDuration = 0f;
+
+            int playableToRemoveAmount = playableIndex;
+            while (currentDuration < transitionDuration)
+            {
+                float progress = currentDuration / transitionDuration;
+
+                // Handle mixer weights
+                if(singleMixerStartWeight < 1f)
+                {
+                    float currentSingleWeight = Mathf.Lerp(singleMixerStartWeight, 1f, progress);
+                    currentSingleWeight = Mathf.Clamp01(currentSingleWeight);
+
+                    float currentBlendWeight = 1f - currentSingleWeight;
+
+                    _standardMixer.SetInputWeight(1, currentSingleWeight);
+                    _standardMixer.SetInputWeight(0, currentBlendWeight);   
+                }
+
+                // Handle other playables
+                if(playableToRemoveAmount > 0)
+                {
+                    float currentOtherTargetWeight = (1 - progress) / (float)playableToRemoveAmount;
+                    for (int i = 0; i < playableIndex; i++)
+                    {
+                        float currentOtherWeight = _singleAnimationMixer.GetInputWeight(i);
+                        if(currentOtherWeight < currentOtherTargetWeight) continue;
+                        _singleAnimationMixer.SetInputWeight(i, currentOtherTargetWeight);
+                    }
+                }
+
+                // Handle target playable
+                _singleAnimationMixer.SetInputWeight(playableIndex, progress);
+
+                yield return null;
+                currentDuration += Time.deltaTime;
+            }
+
+            _standardMixer.SetInputWeight(1, 1f);   // Full weight on single mixer
+            _standardMixer.SetInputWeight(0, 0f);   // Zero weight on blend mixer
+
+            // Remove and destroy other playables
+            for (int i = 0; i < _singleAnimationMixer.GetInputCount(); i++)
+            {
+                Playable p = _singleAnimationMixer.GetInput(i);
+                _singleAnimationMixer.DisconnectInput(i);
+
+                if (i == playableIndex) continue;
+                if(p.CanDestroy())
+                    p.Destroy();
+            }
+            _singleAnimationMixer.SetInputCount(0);
+
+            // Reattach playable (only if valid)
+            if(!playable.IsNull() && playable.IsValid())
+            {
+                _singleAnimationMixer.SetInputCount(1);
+                _singleAnimationMixer.ConnectInput(0, playable, 0, 1f);
+            }
+
+            _singleAnimationBlendTransitionProcess = null;
+        }
+
+        private IEnumerator SingleAnimStopTransition(float transitionDuration)
+        {
+            float startSingleWeight = _standardMixer.GetInputWeight(1);
+            float currentDuration = 0f;
+
+            while (currentDuration < transitionDuration)
+            {
+                float progress = currentDuration / transitionDuration;
+                float currentSingleWeight = Mathf.Lerp(startSingleWeight, 0f, progress);
+                currentSingleWeight = Mathf.Clamp01(currentSingleWeight);
+                float currentBlendWeight = 1 - currentSingleWeight;
+
+                _standardMixer.SetInputWeight(0, currentBlendWeight);
+                _standardMixer.SetInputWeight(1, currentSingleWeight);
+
+                yield return null;
+                currentDuration += Time.deltaTime;
+            }
+
+            // Set final weights
+            _standardMixer.SetInputWeight(0, 1f);
+            _standardMixer.SetInputWeight(1, 0f);
+
+            // Disconnect and destroy playables on single mixer
+            for (int i = 0; i < _singleAnimationMixer.GetInputCount(); i++)
+            {
+                Playable p = _singleAnimationMixer.GetInput(i);
+                _singleAnimationMixer.DisconnectInput(i);
+
+                if(p.CanDestroy()) p.Destroy();
+            }
+            _singleAnimationMixer.SetInputCount(0);
+
+            _singleAnimationBlendTransitionProcess = null;
+        }
+
+        #endregion
+
 
         private static bool HasPlayableAsInput(Playable inputPlayable, Playable parentPlayable, out int inputIndex)
         {
