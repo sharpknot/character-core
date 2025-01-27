@@ -55,7 +55,7 @@ namespace Kabir.CharacterComponents
 
         private void OnAnimatorMove()
         {
-            
+            UpdateAnimatorUpdateables();
         }
 
         private void OnDestroy()
@@ -65,9 +65,65 @@ namespace Kabir.CharacterComponents
 
             StopAllCoroutines();
 
+            if (_animatorMoveUpdatables != null)
+            {
+                _animatorMoveUpdatables.Clear();
+                _animatorMoveUpdatables = null;
+            }
+
             if(PlayableGraph.IsValid()) PlayableGraph.Destroy();
         }
 
+        private List<IAnimatorUpdate> _animatorMoveUpdatables;
+
+        /// <summary>
+        /// Add an OnAnimatorMove object
+        /// </summary>
+        /// <param name="updateable"></param>
+        /// <returns></returns>
+        public bool AddAnimatorUpdateable(IAnimatorUpdate updateable)
+        {
+            if(updateable == null || updateable.IsNull()) return false;
+
+            _animatorMoveUpdatables ??= new();
+            _animatorMoveUpdatables.RemoveAll(u => u == null || u.IsNull());
+            if(_animatorMoveUpdatables.Contains(updateable)) return true;
+
+            _animatorMoveUpdatables.Add(updateable);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Remove an OnAnimatorMove object
+        /// </summary>
+        /// <param name="updateable"></param>
+        /// <returns></returns>
+        public bool RemoveAnimatorUpdateable(IAnimatorUpdate updateable)
+        {
+            if (updateable == null || updateable.IsNull()) return false;
+
+            _animatorMoveUpdatables ??= new();
+            _animatorMoveUpdatables.RemoveAll(u => u == null || u.IsNull());
+
+            if (!_animatorMoveUpdatables.Contains(updateable)) return false;
+            _animatorMoveUpdatables.Remove(updateable);
+            return true;
+        }
+
+        private void UpdateAnimatorUpdateables()
+        {
+            if(_animatorMoveUpdatables == null) return;
+
+            Vector3 deltaPos = Animator.deltaPosition;
+            Quaternion deltaRot = Animator.deltaRotation;
+
+            foreach(var updateable in _animatorMoveUpdatables)
+            {
+                if(updateable == null || updateable.IsNull()) continue;
+                updateable.AnimatorMove(deltaPos, deltaRot);
+            }
+        }
 
         private bool _graphInitialized = false;
         private AnimationPlayableOutput _playableOutput;

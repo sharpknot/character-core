@@ -40,6 +40,7 @@ namespace Kabir.PlayerComponents
         void Start()
         {
             InitializeState();
+            PlayableManager.AddAnimatorUpdateable(this);
         }
 
         void Update()
@@ -51,6 +52,7 @@ namespace Kabir.PlayerComponents
         void OnDestroy()
         {
             StopCurrentState();
+            if(PlayableManager != null) PlayableManager.RemoveAnimatorUpdateable(this);
         }
 
         void OnDisable()
@@ -70,10 +72,10 @@ namespace Kabir.PlayerComponents
             CurrentState.StartState(this);
         }
 
-        public void AnimatorMove(Animator animator)
+        public void AnimatorMove(Vector3 deltaPosition, Quaternion deltaRotation)
         {
             if (CurrentState == null) return;
-            CurrentState.AnimatorMove(animator);
+            CurrentState.AnimatorMove(deltaPosition, deltaRotation);
         }
 
         private void StopCurrentState()
@@ -99,6 +101,8 @@ namespace Kabir.PlayerComponents
 
             StartDefaultState();
         }
+
+        public bool IsNull() => (this == null || gameObject == null);
 
         #endregion
 

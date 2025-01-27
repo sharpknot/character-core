@@ -55,6 +55,15 @@ namespace Kabir
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LightAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""c4428b83-7a9e-4c70-adff-e9975c0576ac"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -167,6 +176,28 @@ namespace Kabir
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b5a1c2c-1f54-44da-b6c3-f5b223106d3a"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LightAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""39794c89-0693-4ab4-8bc4-91e37f0d60e0"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard and Mouse"",
+                    ""action"": ""LightAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -206,6 +237,7 @@ namespace Kabir
             m_Primary_Movement = m_Primary.FindAction("Movement", throwIfNotFound: true);
             m_Primary_Look = m_Primary.FindAction("Look", throwIfNotFound: true);
             m_Primary_Jump = m_Primary.FindAction("Jump", throwIfNotFound: true);
+            m_Primary_LightAttack = m_Primary.FindAction("LightAttack", throwIfNotFound: true);
         }
 
         ~@PlayerInputMain()
@@ -275,6 +307,7 @@ namespace Kabir
         private readonly InputAction m_Primary_Movement;
         private readonly InputAction m_Primary_Look;
         private readonly InputAction m_Primary_Jump;
+        private readonly InputAction m_Primary_LightAttack;
         public struct PrimaryActions
         {
             private @PlayerInputMain m_Wrapper;
@@ -282,6 +315,7 @@ namespace Kabir
             public InputAction @Movement => m_Wrapper.m_Primary_Movement;
             public InputAction @Look => m_Wrapper.m_Primary_Look;
             public InputAction @Jump => m_Wrapper.m_Primary_Jump;
+            public InputAction @LightAttack => m_Wrapper.m_Primary_LightAttack;
             public InputActionMap Get() { return m_Wrapper.m_Primary; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -300,6 +334,9 @@ namespace Kabir
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @LightAttack.started += instance.OnLightAttack;
+                @LightAttack.performed += instance.OnLightAttack;
+                @LightAttack.canceled += instance.OnLightAttack;
             }
 
             private void UnregisterCallbacks(IPrimaryActions instance)
@@ -313,6 +350,9 @@ namespace Kabir
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
+                @LightAttack.started -= instance.OnLightAttack;
+                @LightAttack.performed -= instance.OnLightAttack;
+                @LightAttack.canceled -= instance.OnLightAttack;
             }
 
             public void RemoveCallbacks(IPrimaryActions instance)
@@ -353,6 +393,7 @@ namespace Kabir
             void OnMovement(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnLightAttack(InputAction.CallbackContext context);
         }
     }
 }

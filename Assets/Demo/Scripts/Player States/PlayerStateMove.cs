@@ -10,7 +10,7 @@ namespace Kabir.PlayerStates
     public class PlayerStateMove : PlayerStateBase
     {
         [SerializeField] private float _maxSpeed = 5f, _gravityMultiplier = 2f, _maxRotationSpeed = 480f;
-        [SerializeField] private PlayerStateBase _fallingState, _jumpState;
+        [SerializeField] private PlayerStateBase _fallingState, _jumpState, _attackState;
         [SerializeField] private AnimationBlends[] _motionBlends;
 
         private readonly float _maxFloatingDuration = 0.2f;
@@ -29,6 +29,7 @@ namespace Kabir.PlayerStates
             _currentFloatingDuration = 0f;
 
             StateManager.PlayerInput.Primary.Jump.performed += InputJump;
+            StateManager.PlayerInput.Primary.LightAttack.performed += InputAttack;
 
             KillBlendSequence();
             _blendIndex = 0;
@@ -59,6 +60,8 @@ namespace Kabir.PlayerStates
         public override void StopState()
         {
             StateManager.PlayerInput.Primary.Jump.performed -= InputJump;
+            StateManager.PlayerInput.Primary.LightAttack.performed -= InputAttack;
+
             KillBlendSequence();
 
             base.StopState();
@@ -140,6 +143,12 @@ namespace Kabir.PlayerStates
         {
             if(_jumpState == null) return;
             StateManager.StartNewState(_jumpState);
+        }
+
+        private void InputAttack(InputAction.CallbackContext callbackContext)
+        {
+            if (_attackState == null) return;
+            StateManager.StartNewState(_attackState);
         }
 
     }

@@ -7,6 +7,7 @@ namespace Kabir
     /// </summary>
     public interface IAnimatorUpdate
     {
-        public void AnimatorMove(Animator animator);
+        public void AnimatorMove(Vector3 deltaPosition, Quaternion deltaRotation);
+        public bool IsNull();
     }
 }

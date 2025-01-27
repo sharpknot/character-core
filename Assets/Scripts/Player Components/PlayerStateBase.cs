@@ -15,7 +15,7 @@ namespace Kabir.PlayerComponents
         }
 
         public virtual void UpdateState(float deltaTime) { }
-        public virtual void AnimatorMove(Animator animator) { }
+        public virtual void AnimatorMove(Vector3 deltaPosition, Quaternion deltaRotation) { }
         public virtual void StopState() { }
 
         /// <summary>

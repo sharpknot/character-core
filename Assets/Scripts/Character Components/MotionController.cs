@@ -127,6 +127,8 @@ namespace Kabir.CharacterComponents
             CharacterController.Move(netMotion);
 
             PreviousVerticalVelocity = verticalVelocity;
+            if (GravityMultiplier <= 0f) PreviousVerticalVelocity = 0f;
+
             _motion = Vector3.zero;
             _jumpSpeed = 0f;
         }
@@ -268,6 +270,8 @@ namespace Kabir.CharacterComponents
 
         private float GetCurrentVerticalVelocity(float deltaTime)
         {
+            if (GravityMultiplier <= 0f) return 0f;
+
             if (_jumpSpeed > 0f)
             {
                 return _jumpSpeed;
@@ -279,7 +283,7 @@ namespace Kabir.CharacterComponents
             // If was previously falling, check if grounded yet
             if(PreviousVerticalVelocity < 0f)
             {
-                if(HasFullyGrounded(out RaycastHit groundHit) && CharacterController.isGrounded)
+                if(HasFullyGrounded(out _) && CharacterController.isGrounded)
                 {
                     curVertSpeed = 0f;
                 }
