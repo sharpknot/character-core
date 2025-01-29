@@ -37,6 +37,11 @@ namespace Kabir.CharacterComponents
             }
         }
         private PlayableGraph _playableGraph;
+        
+        /// <summary>
+        /// Automatically removes playables without connected output in every update
+        /// </summary>
+        public bool AutoRemoveOrphanPlayables = true;
 
         private void Start()
         {
@@ -51,6 +56,8 @@ namespace Kabir.CharacterComponents
             {
                 UpdateBlendDebugText();
             }
+
+            CleanOrphanPlayables();
         }
 
         private void OnAnimatorMove()
@@ -62,6 +69,21 @@ namespace Kabir.CharacterComponents
         {
             if (_animationBlendTransitionProcess != null) StopCoroutine(_animationBlendTransitionProcess);
             if (_singleAnimationBlendTransitionProcess != null) StopCoroutine(_singleAnimationBlendTransitionProcess);
+
+            if (_layerPlayables != null)
+            {
+                while (_layerPlayables.Count > 0)
+                {
+                    LayerPlayable lp = _layerPlayables[0];
+                    _layerPlayables.RemoveAt(0);
+
+                    if (lp == null) continue;
+                    if (lp.TransitionProcess != null)
+                    {
+                        StopCoroutine(lp.TransitionProcess);
+                    }
+                }
+            }
 
             StopAllCoroutines();
 
@@ -160,10 +182,39 @@ namespace Kabir.CharacterComponents
             _playableGraph.Play();
 
             _blendList = new();
+            _layerPlayables = new();
 
             _graphInitialized = true;
         }
 
+        private void CleanOrphanPlayables()
+        {
+            if (!AutoRemoveOrphanPlayables) return;
+
+            int initialOrphanCount = PlayableGraph.GetRootPlayableCount();
+            if(initialOrphanCount <= 1) return;
+
+            List<Playable> removeableOrphans = new();
+            for (int i = 0; i < PlayableGraph.GetRootPlayableCount(); i++)
+            {
+                Playable p = PlayableGraph.GetRootPlayable(i);
+                if (p.Equals((Playable)_topLevelMixer)) continue;
+                removeableOrphans.Add(p);
+            }
+
+            while(removeableOrphans.Count > 0)
+            {
+                Playable p = removeableOrphans[0];
+
+                if(p.CanDestroy()) p.Destroy();
+                removeableOrphans.RemoveAt(0);
+            }
+
+            if(initialOrphanCount != PlayableGraph.GetRootPlayableCount())
+            {
+                Debug.Log($"Removed orphan playables from {initialOrphanCount} to {PlayableGraph.GetRootPlayableCount()}");
+            }
+        }
 
         #region Blends
 
@@ -337,7 +388,6 @@ namespace Kabir.CharacterComponents
             }
 
             DisconnectAndReconnectAllInputPlayables((Playable)_blendMixer, (Playable)exceptionToRemove, true);
-
             _animationBlendTransitionProcess = null;
         }
 
@@ -472,14 +522,14 @@ namespace Kabir.CharacterComponents
 
             public void DestroyPlayables()
             {
-                if (!Mixer.IsNull() || !Mixer.IsValid()) return;
+                if (Mixer.IsNull() || !Mixer.IsValid()) return;
 
                 for (int i = 0; i < Mixer.GetInputCount(); i++)
                 {
                     Playable p = Mixer.GetInput(i);
                     Mixer.DisconnectInput(i);
 
-                    if (p.IsValid() && !p.IsNull() && p.CanDestroy())
+                    if (p.CanDestroy())
                     {
                         p.Destroy();
                     }
@@ -808,6 +858,218 @@ namespace Kabir.CharacterComponents
 
         #endregion
 
+        #region Layered Playables
+
+        private List<LayerPlayable> _layerPlayables;
+
+        /// <summary>
+        /// Adds a masked playable on a new layer
+        /// </summary>
+        /// <param name="clip"></param>
+        /// <param name="mask"></param>
+        /// <param name="isAdditive"></param>
+        /// <param name="transitionDuration"></param>
+        /// <param name="childPlayable">Generated ClipPlayable attached as child to generated mixer</param>
+        /// <returns>Generated mixer attached to the top layer</returns>
+        public AnimationMixerPlayable AddMaskedPlayable(AnimationClip clip, AvatarMask mask, bool isAdditive, float transitionDuration, out AnimationClipPlayable childPlayable)
+        {
+            childPlayable = AnimationClipPlayable.Create(PlayableGraph, clip);
+            return AddMaskedPlayable(childPlayable, mask, isAdditive, transitionDuration);
+        }
+
+        /// <summary>
+        /// Adds a masked playable on a new layer
+        /// </summary>
+        /// <param name="playable"></param>
+        /// <param name="mask"></param>
+        /// <param name="isAdditive"></param>
+        /// <param name="transitionDuration"></param>
+        /// <returns>Generated mixer attached to the top layer</returns>
+        public AnimationMixerPlayable AddMaskedPlayable(Playable playable, AvatarMask mask, bool isAdditive, float transitionDuration)
+        {
+            Initialize();
+
+            AnimationMixerPlayable layeredMixer = AnimationMixerPlayable.Create(PlayableGraph, 1);
+            layeredMixer.ConnectInput(0, playable, 0, 1f);
+
+            int index = _topLevelMixer.GetInputCount();
+            _topLevelMixer.SetInputCount(index + 1);
+            _topLevelMixer.ConnectInput(index, layeredMixer, 0, 0f);
+            _topLevelMixer.SetLayerAdditive((uint)index, isAdditive);
+            _topLevelMixer.SetLayerMaskFromAvatarMask((uint)index, mask);
+
+            LayerPlayable lp = new(layeredMixer, mask, isAdditive, index)
+            {
+                Show = true
+            };
+
+            lp.TransitionProcess = MaskedTransitionProcess(lp, transitionDuration, true);
+            if (gameObject != null && gameObject.activeSelf)
+            {
+                StartCoroutine(lp.TransitionProcess);
+            }
+
+            // new LayerPlayable added at the end of the list (important!)
+            _layerPlayables.Add(lp);    
+            
+            return layeredMixer;
+        }
+
+        /// <summary>
+        /// Removes the generated mixer
+        /// </summary>
+        /// <param name="layeredMixer"></param>
+        /// <param name="transitionDuration"></param>
+        public void RemoveMaskedPlayable(AnimationMixerPlayable layeredMixer, float transitionDuration)
+        {
+            Initialize();
+
+            if (layeredMixer.IsNull() || !layeredMixer.IsValid()) return;
+
+            // Search for the layered mixer in the list
+            LayerPlayable targetLayerPlayable = null;
+            foreach(var lp in _layerPlayables)
+            {
+                if(lp == null) continue;
+                if (lp.MixerPlayable.IsNull() || !lp.MixerPlayable.IsValid()) continue;
+                if(layeredMixer.Equals(lp.MixerPlayable))
+                {
+                    targetLayerPlayable = lp;
+                    break;
+                }
+            }
+            
+            // Unable to find
+            if (targetLayerPlayable == null) return;
+
+            if(targetLayerPlayable.TransitionProcess != null)
+            {
+                StopCoroutine(targetLayerPlayable.TransitionProcess);
+            }
+
+            targetLayerPlayable.Show = false;
+            targetLayerPlayable.TransitionProcess = MaskedTransitionProcess(targetLayerPlayable, transitionDuration, false);
+            if (gameObject != null && gameObject.activeSelf)
+            {
+                StartCoroutine(targetLayerPlayable.TransitionProcess);
+            }
+        }
+
+        private IEnumerator MaskedTransitionProcess(LayerPlayable layerPlayable, float transitionDuration, bool show)
+        {
+            float startWeight = _topLevelMixer.GetInputWeight(layerPlayable.InputIndex);
+            float currentTime = 0f;
+
+            float finalWeight = 0f;
+            if (show) finalWeight = 1f;
+
+            while (currentTime < transitionDuration)
+            {
+                float progress = currentTime / transitionDuration;
+                float curWeight = Mathf.Lerp(startWeight, finalWeight, progress);
+                _topLevelMixer.SetInputWeight(layerPlayable.InputIndex, curWeight);
+
+                yield return null;
+                currentTime += Time.deltaTime;
+            }
+
+            layerPlayable.TransitionProcess = null;
+            CleanMaskedPlayabes();
+        }
+
+        private void CleanMaskedPlayabes()
+        {
+            Initialize();
+
+            bool hasProcess = false;
+            foreach (var lp in _layerPlayables)
+            {
+                if(lp == null) continue;
+                if(lp.TransitionProcess != null)
+                {
+                    hasProcess = true;
+                    break;
+                }
+            }
+
+            // There are process pending. No cleaning can be done
+            if (hasProcess) return;
+
+            // Disconnect all from top level
+            for (int i = 0; i < _topLevelMixer.GetInputCount(); i++)
+            {
+                _topLevelMixer.DisconnectInput(i);
+            }
+
+            // Reconnect the standard mixer
+            _topLevelMixer.SetInputCount(1);
+            _topLevelMixer.ConnectInput(0, _standardMixer, 0, 1f);
+
+            // Destroy all destroyable layers
+            int lpi = 0;
+            while (lpi < _layerPlayables.Count)
+            {
+                LayerPlayable lp = _layerPlayables[lpi];
+                if(lp == null)
+                {
+                    _layerPlayables.RemoveAt(lpi);
+                    continue;
+                }
+
+                if(lp.CanDestroy())
+                {
+                    lp.MixerPlayable.Destroy();
+                    _layerPlayables.RemoveAt(lpi);
+                    continue;
+                }
+
+                lpi++;
+            }
+
+            // Reattach surviving layers
+            for (int i = 0; i < _layerPlayables.Count; i++)
+            {
+                LayerPlayable lp = _layerPlayables[i];
+                int inputIndex = _topLevelMixer.GetInputCount();
+                lp.InputIndex = inputIndex;
+
+                _topLevelMixer.SetInputCount(inputIndex + 1);
+                _topLevelMixer.ConnectInput(lp.InputIndex, lp.MixerPlayable, 0, 1f);
+                _topLevelMixer.SetLayerMaskFromAvatarMask((uint)lp.InputIndex, lp.Mask);
+                _topLevelMixer.SetLayerAdditive((uint)lp.InputIndex, lp.IsAdditive);
+            }
+        }
+
+        private class LayerPlayable
+        {
+            public AnimationMixerPlayable MixerPlayable { get; private set; }
+            public AvatarMask Mask { get; private set; }
+            public bool IsAdditive { get; private set; }
+            public bool Show;
+
+            public IEnumerator TransitionProcess;
+            public int InputIndex;
+
+            public LayerPlayable(AnimationMixerPlayable mixerPlayable, AvatarMask mask, bool isAdditive, int inputIndex)
+            {
+                MixerPlayable = mixerPlayable;
+                Mask = mask;
+                IsAdditive = isAdditive;
+                Show = true;
+                InputIndex = inputIndex;
+            }
+
+            public bool CanDestroy()
+            {        
+                if(Show) return false;
+                if(TransitionProcess != null) return false;
+                if(!MixerPlayable.CanDestroy()) return false;
+                return true;
+            }
+
+        }
+
+        #endregion
 
         private static bool HasPlayableAsInput(Playable inputPlayable, Playable parentPlayable, out int inputIndex)
         {
