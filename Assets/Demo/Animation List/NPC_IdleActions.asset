@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3bc55c21c5c0749a838aafebb32c12, type: 3}
+  m_Name: NPC_IdleActions
+  m_EditorClassIdentifier: 
+  _animationList:
+  - Clip: {fileID: 1004136064394597514, guid: 4ffffcb5f55c11d44be2012067fe1edf, type: 3}
+    Speed: 1
+  - Clip: {fileID: -9036972124816686986, guid: 4cadd28097063e2409e1a153e6dd6972, type: 3}
+    Speed: 1
+  - Clip: {fileID: -8523214319182235554, guid: 572fcd33c414f474f9f3f67cca377583, type: 3}
+    Speed: 1
+  - Clip: {fileID: -1105731507409099037, guid: b01c5f0d3d7a92e49b726f4123d937db, type: 3}
+    Speed: 1

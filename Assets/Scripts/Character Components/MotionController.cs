@@ -202,6 +202,19 @@ namespace Kabir.CharacterComponents
             transform.Rotate(0f, angleNeeded, 0f, Space.World);
         }
 
+        /// <summary>
+        /// Teleports to a position
+        /// </summary>
+        /// <param name="position"></param>
+        public void Warp(Vector3 position)
+        {
+            bool originalEnabled = CharacterController.enabled;
+
+            CharacterController.enabled = false;
+            transform.position = position;
+            CharacterController.enabled = originalEnabled;
+        }
+
         public bool HasFlatDirections(out Vector3 flatForward, out Vector3 flatRight)
         {
             flatForward = Vector3.zero;

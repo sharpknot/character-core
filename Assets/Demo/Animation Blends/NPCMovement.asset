@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1087a7e174c5e284cba35f1171db840e, type: 3}
+  m_Name: NPCMovement
+  m_EditorClassIdentifier: 
+  _blendList:
+  - <Clip>k__BackingField: {fileID: 3094330708855449807, guid: 1552f9b8ab4cee34da3bde5d9d397c69, type: 3}
+    <BlendPosition>k__BackingField: {x: 0, y: 0}
+    <ClipSpeed>k__BackingField: 1
+  - <Clip>k__BackingField: {fileID: 3094330708855449807, guid: b0d3963ef18bfce488ad22fff74c5cb0, type: 3}
+    <BlendPosition>k__BackingField: {x: 0, y: 1}
+    <ClipSpeed>k__BackingField: 1.291
+  - <Clip>k__BackingField: {fileID: 3094330708855449807, guid: c295a977c6d18254ba5b485434a81955, type: 3}
+    <BlendPosition>k__BackingField: {x: 0, y: -1}
+    <ClipSpeed>k__BackingField: 1.291
+  - <Clip>k__BackingField: {fileID: 3094330708855449807, guid: f9f5cd4af44a9f148941d3444592270d, type: 3}
+    <BlendPosition>k__BackingField: {x: -1, y: 0}
+    <ClipSpeed>k__BackingField: 2.581
+  - <Clip>k__BackingField: {fileID: 3094330708855449807, guid: 8470869c83e6c13468f482ae7e3b9177, type: 3}
+    <BlendPosition>k__BackingField: {x: 1, y: 0}
+    <ClipSpeed>k__BackingField: 2.581

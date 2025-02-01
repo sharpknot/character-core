@@ -1,0 +1,944 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5974298781189292786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b27bb6d9a2c8d540a10dff10acc543e, type: 3}
+  m_Name: MoveToGraph Debug Info
+  m_EditorClassIdentifier: 
+  m_CodeBreakPointsList: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad8f2220607dac4db5082ff333fafb8, type: 3}
+  m_Name: MoveToGraph
+  m_EditorClassIdentifier: 
+  Blackboard: {fileID: 6331039825018930607}
+  m_Description: 
+  m_Nodes:
+  - rid: 3630678225795153993
+  - rid: 3630678242194882658
+  m_VersionTimestamp: 638739723054296792
+  m_DebugInfo: {fileID: -5974298781189292786}
+  m_RuntimeGraph: {fileID: 80128171772664740}
+  AssetID:
+    m_Value0: 352072500309206756
+    m_Value1: 10628834707681522601
+  Story:
+    Story: Moves to destination using MotionController and Agent
+    StoryVariableNames: []
+    Variables:
+    - Name: destination
+      Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: MotionController
+      Type:
+        m_SerializableType: Kabir.CharacterComponents.MotionController, Assembly-CSharp,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Agent
+      Type:
+        m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+  m_NodeModelsInfo:
+  - Name: On Start
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 3335272451348827663
+      m_Value1: 11549843281177505721
+    Variables: []
+    NamedChildren: []
+  - Name: Move to destination
+    Story: 'Moves [MotionController] and [Agent] to [Destination] at [Speed] .Will
+      notify [IsJumping]'
+    RuntimeTypeID:
+      m_Value0: 11946703538713458006
+      m_Value1: 11994688881491252648
+    Variables:
+    - Name: MotionController
+      Type:
+        m_SerializableType: Kabir.CharacterComponents.MotionController, Assembly-CSharp,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Agent
+      Type:
+        m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Destination
+      Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Speed
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: IsJumping
+      Type:
+        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: ArrivalDistance
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: RotationSpeed
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: PlayableManager
+      Type:
+        m_SerializableType: Kabir.CharacterComponents.PlayableManager, Assembly-CSharp,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: AnimMotionBlends
+      Type:
+        m_SerializableType: Kabir.ScriptableObjects.AnimationBlends, Assembly-CSharp,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+  - Name: Wait for Event Message
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 15586893896841764598
+      m_Value1: 11910781537861691316
+    Variables:
+    - Name: ChannelVariable
+      Type:
+        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+  - Name: Start On Event Message
+    Story: 'When a message is received on [ChannelVariable]'
+    RuntimeTypeID:
+      m_Value0: 3356300611230043817
+      m_Value1: 5497005381991559097
+    Variables:
+    - Name: ChannelVariable
+      Type:
+        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+  - Name: Restart
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 13639978763537614925
+      m_Value1: 3904329925062786712
+    Variables: []
+    NamedChildren: []
+  - Name: Set Variable Value
+    Story: 'Set [Variable] value to [Value]'
+    RuntimeTypeID:
+      m_Value0: 5494721648866555964
+      m_Value1: 18024545711220129068
+    Variables:
+    - Name: Variable
+      Type:
+        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Value
+      Type:
+        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+  - Name: Conditional Guard
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 10845871997924083670
+      m_Value1: 4041440894818793834
+    Variables: []
+    NamedChildren: []
+  - Name: Set MotionController values
+    Story: Sets [MotionController] values
+    RuntimeTypeID:
+      m_Value0: 14551651097811499033
+      m_Value1: 18338662679518666643
+    Variables:
+    - Name: MotionController
+      Type:
+        m_SerializableType: Kabir.CharacterComponents.MotionController, Assembly-CSharp,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: FailOnMissing
+      Type:
+        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: GravityMultiplier
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: FollowTerrainGradient
+      Type:
+        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: FollowSlopeLimit
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: AutoEvaluate
+      Type:
+        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    NamedChildren: []
+  m_Blackboards: []
+  m_MainBlackboardAuthoringAsset: {fileID: 6331039825018930607}
+  m_CommandBuffer:
+    m_Commands: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 3630678225795153993
+      type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -30.399986, y: -108.000015}
+        ID:
+          m_Value0: 7080033868589857139
+          m_Value1: 11656682113840174884
+        Parents: []
+        PortModels:
+        - rid: 3630678225795153994
+        NodeType:
+          m_SerializableType: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 3335272451348827663
+          m_Value1: 11549843281177505721
+        m_FieldValues: []
+        Repeat: 0
+    - rid: 3630678225795153994
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3630678225795153993
+        m_Connections:
+        - rid: 3630678242194882659
+    - rid: 3630678242194882658
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -22.02412, y: 120.08757}
+        ID:
+          m_Value0: 1830943553338022354
+          m_Value1: 13883387814845433212
+        Parents: []
+        PortModels:
+        - rid: 3630678242194882659
+        - rid: 3630678242194882660
+        NodeType:
+          m_SerializableType: MoveToDestinationAction, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 11946703538713458006
+          m_Value1: 11994688881491252648
+        m_FieldValues:
+        - rid: 3630678242194882661
+        - rid: 3630678242194882662
+        - rid: 3630678242194882663
+        - rid: 3630678242194882664
+        - rid: 3630678264740577598
+        - rid: 3630678242194882675
+        - rid: 3630678242194882703
+        - rid: 3630678242194882679
+        - rid: 3630678242194882680
+    - rid: 3630678242194882659
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3630678242194882658
+        m_Connections:
+        - rid: 3630678225795153994
+    - rid: 3630678242194882660
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3630678242194882658
+        m_Connections: []
+    - rid: 3630678242194882661
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: MotionController
+        Type:
+          m_SerializableType: Kabir.CharacterComponents.MotionController, Assembly-CSharp,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 3630678242194882665
+        LinkedVariable:
+          rid: 3630678242194882683
+    - rid: 3630678242194882662
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Agent
+        Type:
+          m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 3630678242194882666
+        LinkedVariable:
+          rid: 3630678242194882684
+    - rid: 3630678242194882663
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Destination
+        Type:
+          m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 3630678242194882667
+        LinkedVariable:
+          rid: 3630678242194882668
+    - rid: 3630678242194882664
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Speed
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3630678242194882669
+        LinkedVariable:
+          rid: 3630678242194882774
+    - rid: 3630678242194882665
+      type: {class: 'BlackboardVariable`1[[Kabir.CharacterComponents.MotionController, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882666
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882667
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {x: 0, y: 0, z: 0}
+    - rid: 3630678242194882668
+      type: {class: 'TypedVariableModel`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 11968147938788136624
+          m_Value1: 4008585276714705587
+        Name: Destination
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {x: 0, y: 0, z: 0}
+    - rid: 3630678242194882669
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 3630678242194882675
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: ArrivalDistance
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3630678242194882677
+        LinkedVariable:
+          rid: -2
+    - rid: 3630678242194882677
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1
+    - rid: 3630678242194882679
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: PlayableManager
+        Type:
+          m_SerializableType: Kabir.CharacterComponents.PlayableManager, Assembly-CSharp,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 3630678242194882681
+        LinkedVariable:
+          rid: 3630678242194882706
+    - rid: 3630678242194882680
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: AnimMotionBlends
+        Type:
+          m_SerializableType: Kabir.ScriptableObjects.AnimationBlends, Assembly-CSharp,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 3630678242194882682
+        LinkedVariable:
+          rid: 3630678242194882685
+    - rid: 3630678242194882681
+      type: {class: 'BlackboardVariable`1[[Kabir.CharacterComponents.PlayableManager, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882682
+      type: {class: 'BlackboardVariable`1[[Kabir.ScriptableObjects.AnimationBlends, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882683
+      type: {class: 'TypedVariableModel`1[[Kabir.CharacterComponents.MotionController, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 4284614791921005159
+          m_Value1: 7461811354255944005
+        Name: MotionController
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882684
+      type: {class: 'TypedVariableModel`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 9951383662573394210
+          m_Value1: 16012961464981958811
+        Name: Agent
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882685
+      type: {class: 'TypedVariableModel`1[[Kabir.ScriptableObjects.AnimationBlends, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 452905197015343047
+          m_Value1: 11342038302254066869
+        Name: Movement Blends
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882703
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: RotationSpeed
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3630678242194882704
+        LinkedVariable:
+          rid: 3630678246652116993
+    - rid: 3630678242194882704
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 480
+    - rid: 3630678242194882706
+      type: {class: 'TypedVariableModel`1[[Kabir.CharacterComponents.PlayableManager, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 16535379760013184541
+          m_Value1: 8502734783764317957
+        Name: PlayableManager
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882774
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 3798930832358319227
+          m_Value1: 16406722653464930127
+        Name: Speed
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 3630678246652116993
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1061758297722449064
+          m_Value1: 5115354854391251269
+        Name: RotationSpeed
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 480
+    - rid: 3630678264740577598
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: IsJumping
+        Type:
+          m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3630678264740577599
+        LinkedVariable:
+          rid: 3630678264740577600
+    - rid: 3630678264740577599
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 3630678264740577600
+      type: {class: 'TypedVariableModel`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 15490004102586629053
+          m_Value1: 328384736617840397
+        Name: Is Jumping
+        IsExposed: 0
+        m_IsShared: 0
+        m_Value: 0
+--- !u!114 &80128171772664740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db920e62f70f420bb33c771449926fa4, type: 3}
+  m_Name: MoveToGraph
+  m_EditorClassIdentifier: 
+  Graphs:
+  - rid: 3630678273070203834
+  RootGraph:
+    rid: 3630678273070203834
+  m_DebugInfo: {fileID: -5974298781189292786}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 3630678273070203834
+      type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        AuthoringAssetID:
+          m_Value0: 352072500309206756
+          m_Value1: 10628834707681522601
+        m_DebugInfo: {fileID: 0}
+        Root:
+          rid: 3630678273070203835
+        BlackboardReference:
+          rid: 3630678273070203836
+        BlackboardGroupReferences: []
+        m_VersionTimestamp: 638739723054296792
+    - rid: 3630678273070203835
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 7080033868589857139
+          m_Value1: 11656682113840174884
+        Graph:
+          rid: 3630678273070203834
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: 3630678273070203837
+        Repeat: 0
+    - rid: 3630678273070203836
+      type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Blackboard:
+          rid: 3630678273070203838
+        m_Source: {fileID: 9006507992572434590}
+    - rid: 3630678273070203837
+      type: {class: MoveToDestinationAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 1830943553338022354
+          m_Value1: 13883387814845433212
+        Graph:
+          rid: 3630678273070203834
+        m_Parent:
+          rid: 3630678273070203835
+        MotionController:
+          rid: 3630678273070203839
+        Agent:
+          rid: 3630678273070203840
+        Destination:
+          rid: 3630678273070203841
+        Speed:
+          rid: 3630678273070203842
+        IsJumping:
+          rid: 3630678273070203843
+        ArrivalDistance:
+          rid: 3630678273070203844
+        RotationSpeed:
+          rid: 3630678273070203845
+        PlayableManager:
+          rid: 3630678273070203846
+        AnimMotionBlends:
+          rid: 3630678273070203847
+    - rid: 3630678273070203838
+      type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Variables:
+        - rid: 3630678273070203848
+        - rid: 3630678273070203841
+        - rid: 3630678273070203842
+        - rid: 3630678273070203847
+        - rid: 3630678273070203843
+        - rid: 3630678273070203840
+        - rid: 3630678273070203839
+        - rid: 3630678273070203846
+        - rid: 3630678273070203845
+    - rid: 3630678273070203839
+      type: {class: 'BlackboardVariable`1[[Kabir.CharacterComponents.MotionController, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 4284614791921005159
+          m_Value1: 7461811354255944005
+        Name: MotionController
+        m_Value: {fileID: 0}
+    - rid: 3630678273070203840
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9951383662573394210
+          m_Value1: 16012961464981958811
+        Name: Agent
+        m_Value: {fileID: 0}
+    - rid: 3630678273070203841
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 11968147938788136624
+          m_Value1: 4008585276714705587
+        Name: Destination
+        m_Value: {x: 0, y: 0, z: 0}
+    - rid: 3630678273070203842
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3798930832358319227
+          m_Value1: 16406722653464930127
+        Name: Speed
+        m_Value: 0
+    - rid: 3630678273070203843
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 15490004102586629053
+          m_Value1: 328384736617840397
+        Name: Is Jumping
+        m_Value: 0
+    - rid: 3630678273070203844
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 1
+    - rid: 3630678273070203845
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1061758297722449064
+          m_Value1: 5115354854391251269
+        Name: RotationSpeed
+        m_Value: 480
+    - rid: 3630678273070203846
+      type: {class: 'BlackboardVariable`1[[Kabir.CharacterComponents.PlayableManager, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 16535379760013184541
+          m_Value1: 8502734783764317957
+        Name: PlayableManager
+        m_Value: {fileID: 0}
+    - rid: 3630678273070203847
+      type: {class: 'BlackboardVariable`1[[Kabir.ScriptableObjects.AnimationBlends, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 452905197015343047
+          m_Value1: 11342038302254066869
+        Name: Movement Blends
+        m_Value: {fileID: 0}
+    - rid: 3630678273070203848
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+--- !u!114 &6331039825018930607
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd922ae02c94c87a66e46a10a7319b9, type: 3}
+  m_Name: MoveToGraph Blackboard
+  m_EditorClassIdentifier: 
+  AssetID:
+    m_Value0: 352072500309206756
+    m_Value1: 10628834707681522601
+  m_Variables:
+  - rid: 3630678225795153995
+  - rid: 3630678225795153997
+  - rid: 3630678242194882560
+  - rid: 3630678242194882561
+  - rid: 3630678242194882705
+  - rid: 3630678225795154081
+  - rid: 3630678225795154104
+  - rid: 3630678230290137124
+  - rid: 3630678246652116992
+  m_VersionTimestamp: 638739723054620204
+  m_CommandBuffer:
+    m_Commands: []
+  m_RuntimeBlackboardAsset: {fileID: 9006507992572434590}
+  references:
+    version: 2
+    RefIds:
+    - rid: 3630678225795153995
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3630678225795153997
+      type: {class: 'TypedVariableModel`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 11968147938788136624
+          m_Value1: 4008585276714705587
+        Name: Destination
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {x: 0, y: 0, z: 0}
+    - rid: 3630678225795154081
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 3798930832358319227
+          m_Value1: 16406722653464930127
+        Name: Speed
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 3630678225795154104
+      type: {class: 'TypedVariableModel`1[[Kabir.ScriptableObjects.AnimationBlends, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 452905197015343047
+          m_Value1: 11342038302254066869
+        Name: Movement Blends
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3630678230290137124
+      type: {class: 'TypedVariableModel`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 15490004102586629053
+          m_Value1: 328384736617840397
+        Name: Is Jumping
+        IsExposed: 0
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 3630678242194882560
+      type: {class: 'TypedVariableModel`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 9951383662573394210
+          m_Value1: 16012961464981958811
+        Name: Agent
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882561
+      type: {class: 'TypedVariableModel`1[[Kabir.CharacterComponents.MotionController, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 4284614791921005159
+          m_Value1: 7461811354255944005
+        Name: MotionController
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882705
+      type: {class: 'TypedVariableModel`1[[Kabir.CharacterComponents.PlayableManager, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 16535379760013184541
+          m_Value1: 8502734783764317957
+        Name: PlayableManager
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3630678246652116992
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1061758297722449064
+          m_Value1: 5115354854391251269
+        Name: RotationSpeed
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 480
+--- !u!114 &9006507992572434590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
+  m_Name: MoveToGraph Blackboard
+  m_EditorClassIdentifier: 
+  VersionTimestamp: 638739723054620204
+  AssetID:
+    m_Value0: 352072500309206756
+    m_Value1: 10628834707681522601
+  m_Blackboard:
+    m_Variables:
+    - rid: 3630678225795154005
+    - rid: 3630678225795154007
+    - rid: 3630678225795154089
+    - rid: 3630678225795154115
+    - rid: 3630678230290137134
+    - rid: 3630678242194882581
+    - rid: 3630678242194882582
+    - rid: 3630678242194882724
+    - rid: 3630678246652117009
+  m_SharedBlackboardVariableGuids: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3630678225795154005
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 3630678225795154007
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 11968147938788136624
+          m_Value1: 4008585276714705587
+        Name: Destination
+        m_Value: {x: 0, y: 0, z: 0}
+    - rid: 3630678225795154089
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3798930832358319227
+          m_Value1: 16406722653464930127
+        Name: Speed
+        m_Value: 0
+    - rid: 3630678225795154115
+      type: {class: 'BlackboardVariable`1[[Kabir.ScriptableObjects.AnimationBlends, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 452905197015343047
+          m_Value1: 11342038302254066869
+        Name: Movement Blends
+        m_Value: {fileID: 0}
+    - rid: 3630678230290137134
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 15490004102586629053
+          m_Value1: 328384736617840397
+        Name: Is Jumping
+        m_Value: 0
+    - rid: 3630678242194882581
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9951383662573394210
+          m_Value1: 16012961464981958811
+        Name: Agent
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882582
+      type: {class: 'BlackboardVariable`1[[Kabir.CharacterComponents.MotionController, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 4284614791921005159
+          m_Value1: 7461811354255944005
+        Name: MotionController
+        m_Value: {fileID: 0}
+    - rid: 3630678242194882724
+      type: {class: 'BlackboardVariable`1[[Kabir.CharacterComponents.PlayableManager, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 16535379760013184541
+          m_Value1: 8502734783764317957
+        Name: PlayableManager
+        m_Value: {fileID: 0}
+    - rid: 3630678246652117009
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1061758297722449064
+          m_Value1: 5115354854391251269
+        Name: RotationSpeed
+        m_Value: 480

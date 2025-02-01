@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 using Kabir.ScriptableObjects;
+using UnityEngine.Events;
 
 namespace Kabir.CharacterComponents
 {
@@ -43,6 +44,8 @@ namespace Kabir.CharacterComponents
         /// </summary>
         public bool AutoRemoveOrphanPlayables = true;
 
+        public event UnityAction<Vector3, Quaternion> OnAnimatorMoveUpdate;
+
         private void Start()
         {
             Initialize();
@@ -63,6 +66,7 @@ namespace Kabir.CharacterComponents
         private void OnAnimatorMove()
         {
             UpdateAnimatorUpdateables();
+            OnAnimatorMoveUpdate?.Invoke(Animator.deltaPosition, Animator.deltaRotation);
         }
 
         private void OnDestroy()
@@ -208,11 +212,6 @@ namespace Kabir.CharacterComponents
 
                 if(p.CanDestroy()) p.Destroy();
                 removeableOrphans.RemoveAt(0);
-            }
-
-            if(initialOrphanCount != PlayableGraph.GetRootPlayableCount())
-            {
-                Debug.Log($"Removed orphan playables from {initialOrphanCount} to {PlayableGraph.GetRootPlayableCount()}");
             }
         }
 

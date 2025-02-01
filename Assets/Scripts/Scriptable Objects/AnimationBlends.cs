@@ -36,6 +36,14 @@ namespace Kabir.ScriptableObjects
             return result;
         }
 
+        private void OnValidate()
+        {
+            if(_blendList != null)
+            {
+                foreach(var b in _blendList) b?.OnValidate();
+            }
+        }
+
         [System.Serializable]
         private class BlendData
         {
