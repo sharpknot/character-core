@@ -882,6 +882,8 @@ GameObject:
   - component: {fileID: 7115360378294701753}
   - component: {fileID: 6505293106081914346}
   - component: {fileID: 2256585253405361600}
+  - component: {fileID: -9182835783845045508}
+  - component: {fileID: 8470004251497924131}
   m_Layer: 0
   m_Name: NPC_Worker
   m_TagString: Untagged
@@ -1075,6 +1077,34 @@ MonoBehaviour:
           m_Value1: 13748055990957835823
         Name: On Body Pickup
         m_Value: {fileID: 7520653012189056918}
+--- !u!114 &-9182835783845045508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5246738471184819631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda285fd6eb9b72499b24a89daaec598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8470004251497924131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5246738471184819631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c40aa2605ad96054e8107a70d2e30ac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _eventManager: {fileID: -9182835783845045508}
+  _defaultFootstepAudio:
+  - {fileID: 729940977683730136, guid: e9dc3c88ea5e8f442b0e0079a5f4689d, type: 3}
+  _minInterval: 0.1
 --- !u!1 &5314862383389274428
 GameObject:
   m_ObjectHideFlags: 0
