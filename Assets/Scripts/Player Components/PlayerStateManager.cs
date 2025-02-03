@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using Kabir.CharacterComponents;
+using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 namespace Kabir.PlayerComponents
 {
@@ -27,6 +29,8 @@ namespace Kabir.PlayerComponents
         [field: SerializeField, Required] public MotionController MotionController { get; private set; }
         [field: SerializeField, Required] public PlayableManager PlayableManager { get; private set; }
 
+        [SerializeField] private CinemachineInputAxisController _freeCamInputController;
+
         [field:SerializeField, ReadOnly, BoxGroup("Player States")]
         public PlayerStateBase CurrentState { get; private set; }
         [BoxGroup("Player States")]
@@ -39,6 +43,10 @@ namespace Kabir.PlayerComponents
 
         void Start()
         {
+            PlayerInput.Primary.MainMenu.performed += InputMainMenu;
+
+            LevelEventManager.OnShowMainMenu += OnShowMainMenu;
+
             InitializeState();
             PlayableManager.AddAnimatorUpdateable(this);
         }
@@ -52,7 +60,9 @@ namespace Kabir.PlayerComponents
         void OnDestroy()
         {
             StopCurrentState();
-            if(PlayableManager != null) PlayableManager.RemoveAnimatorUpdateable(this);
+            PlayerInput.Primary.MainMenu.performed -= InputMainMenu;
+            LevelEventManager.OnShowMainMenu -= OnShowMainMenu;
+            if (PlayableManager != null) PlayableManager.RemoveAnimatorUpdateable(this);
         }
 
         void OnDisable()
@@ -105,6 +115,37 @@ namespace Kabir.PlayerComponents
         public bool IsNull() => (this == null || gameObject == null);
 
         #endregion
+
+        private void InputMainMenu(InputAction.CallbackContext context)
+        {
+            LevelEventManager.OnShowMainMenu?.Invoke(true);
+        }
+
+        private void OnShowMainMenu(bool showMainMenu)
+        {
+            EnableLookAxis(!showMainMenu);
+
+            if (showMainMenu)
+            {
+                PlayerInput.Disable();
+                return;
+            }
+
+            PlayerInput.Enable();
+        }
+
+        private void EnableLookAxis(bool enable)
+        {
+            if(_freeCamInputController == null) return;
+            var inputList = _freeCamInputController.Controllers;
+            foreach (var controller in inputList)
+            {
+                if (controller != null)
+                {
+                    controller.Enabled = enable;
+                }
+            }
+        }
 
     }
 }

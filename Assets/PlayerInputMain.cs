@@ -73,6 +73,15 @@ namespace Kabir
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MainMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e573bba-5b38-46db-bb47-035d7e695e96"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -229,6 +238,39 @@ namespace Kabir
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""347dea72-0a7a-4412-8703-5c385edc822d"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""MainMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ebf1ded8-aad6-4b38-a839-679dc2395ff4"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""MainMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""181d4b5b-e540-48bf-b2a4-9f72261aecbb"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard and Mouse"",
+                    ""action"": ""MainMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -270,6 +312,7 @@ namespace Kabir
             m_Primary_Jump = m_Primary.FindAction("Jump", throwIfNotFound: true);
             m_Primary_LightAttack = m_Primary.FindAction("LightAttack", throwIfNotFound: true);
             m_Primary_Interact = m_Primary.FindAction("Interact", throwIfNotFound: true);
+            m_Primary_MainMenu = m_Primary.FindAction("MainMenu", throwIfNotFound: true);
         }
 
         ~@PlayerInputMain()
@@ -341,6 +384,7 @@ namespace Kabir
         private readonly InputAction m_Primary_Jump;
         private readonly InputAction m_Primary_LightAttack;
         private readonly InputAction m_Primary_Interact;
+        private readonly InputAction m_Primary_MainMenu;
         public struct PrimaryActions
         {
             private @PlayerInputMain m_Wrapper;
@@ -350,6 +394,7 @@ namespace Kabir
             public InputAction @Jump => m_Wrapper.m_Primary_Jump;
             public InputAction @LightAttack => m_Wrapper.m_Primary_LightAttack;
             public InputAction @Interact => m_Wrapper.m_Primary_Interact;
+            public InputAction @MainMenu => m_Wrapper.m_Primary_MainMenu;
             public InputActionMap Get() { return m_Wrapper.m_Primary; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -374,6 +419,9 @@ namespace Kabir
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @MainMenu.started += instance.OnMainMenu;
+                @MainMenu.performed += instance.OnMainMenu;
+                @MainMenu.canceled += instance.OnMainMenu;
             }
 
             private void UnregisterCallbacks(IPrimaryActions instance)
@@ -393,6 +441,9 @@ namespace Kabir
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
+                @MainMenu.started -= instance.OnMainMenu;
+                @MainMenu.performed -= instance.OnMainMenu;
+                @MainMenu.canceled -= instance.OnMainMenu;
             }
 
             public void RemoveCallbacks(IPrimaryActions instance)
@@ -435,6 +486,7 @@ namespace Kabir
             void OnJump(InputAction.CallbackContext context);
             void OnLightAttack(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
+            void OnMainMenu(InputAction.CallbackContext context);
         }
     }
 }
