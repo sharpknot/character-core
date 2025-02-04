@@ -7,6 +7,7 @@ using UnityEngine.Animations;
 using UnityEngine.Playables;
 using Kabir.ScriptableObjects;
 using UnityEngine.Events;
+using Newtonsoft.Json.Bson;
 
 namespace Kabir.CharacterComponents
 {
@@ -59,8 +60,6 @@ namespace Kabir.CharacterComponents
             {
                 UpdateBlendDebugText();
             }
-
-            CleanOrphanPlayables();
         }
 
         private void OnAnimatorMove()
@@ -189,30 +188,6 @@ namespace Kabir.CharacterComponents
             _layerPlayables = new();
 
             _graphInitialized = true;
-        }
-
-        private void CleanOrphanPlayables()
-        {
-            if (!AutoRemoveOrphanPlayables) return;
-
-            int initialOrphanCount = PlayableGraph.GetRootPlayableCount();
-            if(initialOrphanCount <= 1) return;
-
-            List<Playable> removeableOrphans = new();
-            for (int i = 0; i < PlayableGraph.GetRootPlayableCount(); i++)
-            {
-                Playable p = PlayableGraph.GetRootPlayable(i);
-                if (p.Equals((Playable)_topLevelMixer)) continue;
-                removeableOrphans.Add(p);
-            }
-
-            while(removeableOrphans.Count > 0)
-            {
-                Playable p = removeableOrphans[0];
-
-                if(p.CanDestroy()) p.Destroy();
-                removeableOrphans.RemoveAt(0);
-            }
         }
 
         #region Blends
@@ -1004,7 +979,7 @@ namespace Kabir.CharacterComponents
             _topLevelMixer.SetInputCount(1);
             _topLevelMixer.ConnectInput(0, _standardMixer, 0, 1f);
 
-            // Destroy all destroyable layers
+            // Remove destroyable layers
             int lpi = 0;
             while (lpi < _layerPlayables.Count)
             {
@@ -1017,8 +992,8 @@ namespace Kabir.CharacterComponents
 
                 if(lp.CanDestroy())
                 {
-                    lp.MixerPlayable.Destroy();
                     _layerPlayables.RemoveAt(lpi);
+                    DestroyWithChildren(lp.MixerPlayable);
                     continue;
                 }
 
@@ -1030,12 +1005,13 @@ namespace Kabir.CharacterComponents
             {
                 LayerPlayable lp = _layerPlayables[i];
                 int inputIndex = _topLevelMixer.GetInputCount();
-                lp.InputIndex = inputIndex;
 
                 _topLevelMixer.SetInputCount(inputIndex + 1);
-                _topLevelMixer.ConnectInput(lp.InputIndex, lp.MixerPlayable, 0, 1f);
-                _topLevelMixer.SetLayerMaskFromAvatarMask((uint)lp.InputIndex, lp.Mask);
-                _topLevelMixer.SetLayerAdditive((uint)lp.InputIndex, lp.IsAdditive);
+                _topLevelMixer.ConnectInput(inputIndex, lp.MixerPlayable, 0, 1f);
+                _topLevelMixer.SetLayerMaskFromAvatarMask((uint)inputIndex, lp.Mask);
+                _topLevelMixer.SetLayerAdditive((uint)inputIndex, lp.IsAdditive);
+
+                lp.InputIndex = inputIndex;
             }
         }
 
@@ -1140,6 +1116,22 @@ namespace Kabir.CharacterComponents
             }
         }
 
+        private static void DestroyWithChildren(Playable playable)
+        {
+            if (playable.IsNull() || !playable.IsValid()) return;
 
+            for (int i = 0; i < playable.GetInputCount(); i++)
+            {
+                Playable child = playable.GetInput(i);
+
+                if (child.IsValid() && !child.IsNull())
+                {
+                    DestroyWithChildren(child);
+                    if(child.IsValid() && child.CanDestroy()) child.Destroy();
+                }
+            }
+
+            if(playable.CanDestroy()) playable.Destroy();
+        }
     }
 }

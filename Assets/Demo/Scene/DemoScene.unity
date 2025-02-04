@@ -10729,7 +10729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6e69f3a652395479a7ca45700d7ca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoRemoveOrphanPlayables: 1
+  AutoRemoveOrphanPlayables: 0
   _blendDebugText: {fileID: 0}
   _allowDebug: 0
 --- !u!114 &405007133740588659
