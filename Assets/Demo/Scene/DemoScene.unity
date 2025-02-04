@@ -3811,7 +3811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &680038141
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5114,7 +5114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1076183183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5128,7 +5128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _worker: {fileID: 5246738471184819631, guid: 3a68282f48929f8479c4ea01b770a4ee, type: 3}
-  _workerAmount: 1
+  _workerAmount: 5
   _spawnRadius: 10.8
   _spawnInterval: {x: 2, y: 3}
 --- !u!4 &1076183184

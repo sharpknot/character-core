@@ -779,8 +779,7 @@ namespace Kabir.CharacterComponents
                 _singleAnimationMixer.DisconnectInput(i);
 
                 if (i == playableIndex) continue;
-                if(p.CanDestroy())
-                    p.Destroy();
+                DestroyWithChildren(p);
             }
             _singleAnimationMixer.SetInputCount(0);
 
@@ -823,7 +822,7 @@ namespace Kabir.CharacterComponents
                 Playable p = _singleAnimationMixer.GetInput(i);
                 _singleAnimationMixer.DisconnectInput(i);
 
-                if(p.CanDestroy()) p.Destroy();
+                DestroyWithChildren(p);
             }
             _singleAnimationMixer.SetInputCount(0);
 
