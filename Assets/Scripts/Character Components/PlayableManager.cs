@@ -40,11 +40,6 @@ namespace Kabir.CharacterComponents
         }
         private PlayableGraph _playableGraph;
         
-        /// <summary>
-        /// Automatically removes playables without connected output in every update
-        /// </summary>
-        public bool AutoRemoveOrphanPlayables = true;
-
         public event UnityAction<Vector3, Quaternion> OnAnimatorMoveUpdate;
 
         private void Start()
