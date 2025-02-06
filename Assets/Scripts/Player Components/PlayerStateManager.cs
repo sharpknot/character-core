@@ -28,6 +28,7 @@ namespace Kabir.PlayerComponents
         [field: SerializeField, Required] public CameraManager CameraManager { get; private set; }
         [field: SerializeField, Required] public MotionController MotionController { get; private set; }
         [field: SerializeField, Required] public PlayableManager PlayableManager { get; private set; }
+        [field: SerializeField, Required] public PlayerInteractableManager InteractableManager { get; private set; }
 
         [SerializeField] private CinemachineInputAxisController _freeCamInputController;
 
