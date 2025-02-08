@@ -18,14 +18,7 @@ MonoBehaviour:
   _fallingState: {fileID: 11400000, guid: e086e079bfd51f94e9bd042de15c98a7, type: 2}
   _jumpState: {fileID: 11400000, guid: af819bef8081cc244929c009d0bfc69e, type: 2}
   _attackState: {fileID: 11400000, guid: f8882bd078b3b8a46a57d6f55b03f1f1, type: 2}
+  _interactState: {fileID: 11400000, guid: 4dc3b2c685646534ca70bc068052b307, type: 2}
   _motionBlends:
   - {fileID: 11400000, guid: 8722566ce0007a4409b2d1233557c238, type: 2}
   - {fileID: 11400000, guid: 61b291cfb8d47f344a61960b7badc187, type: 2}
-  _interactAnims:
-  - InteractClip: {fileID: 3094330708855449807, guid: 6ad42e2eec2289d47bc9c204c6a0df9e, type: 3}
-    ClipSpeed: 1
-  - InteractClip: {fileID: -6863707987208230174, guid: 031febde0c0dc7344b6a230786713231, type: 3}
-    ClipSpeed: 2
-  - InteractClip: {fileID: -4286565773015259570, guid: 0b7ed30c282d38b49aa710e76545d222, type: 3}
-    ClipSpeed: 1
-  _interactMask: {fileID: 31900000, guid: 20824646c9ada454b9d2a9a1cf5798fa, type: 2}

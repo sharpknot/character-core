@@ -1,3 +1,4 @@
+using Kabir.CharacterComponents;
 using UnityEngine;
 
 namespace Kabir.PlayerComponents
@@ -8,10 +9,11 @@ namespace Kabir.PlayerComponents
     public class PlayerStateBase : ScriptableObject
     {
         protected PlayerStateManager StateManager { get; private set; }
-
+        protected AnimationEventManager AnimationEventManager { get; private set; }
         public virtual void StartState(PlayerStateManager stateManager)
         {
             StateManager = stateManager;
+            AnimationEventManager = StateManager.GetComponent<AnimationEventManager>();
         }
 
         public virtual void UpdateState(float deltaTime) { }

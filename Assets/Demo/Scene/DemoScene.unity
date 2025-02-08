@@ -3942,6 +3942,8 @@ GameObject:
   - component: {fileID: 622053811}
   - component: {fileID: 622053813}
   - component: {fileID: 622053812}
+  - component: {fileID: 622053814}
+  - component: {fileID: 622053815}
   m_Layer: 0
   m_Name: Interact
   m_TagString: Untagged
@@ -3958,11 +3960,12 @@ Transform:
   m_GameObject: {fileID: 622053810}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.9238794, z: -0, w: 0.38268375}
-  m_LocalPosition: {x: 4.06, y: 1, z: 11.69}
+  m_LocalPosition: {x: 4.06, y: 0, z: 11.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1609945498}
+  - {fileID: 1891383470}
   m_Father: {fileID: 1917753017}
   m_LocalEulerAnglesHint: {x: 0, y: 135, z: 0}
 --- !u!114 &622053812
@@ -3979,13 +3982,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isActive: 1
   _interactText: Interact with 1
-  _interactPosition: {fileID: 0}
-  <Clip>k__BackingField: {fileID: 0}
-  <ClipSpeed>k__BackingField: 1
-  <UseRootAnimation>k__BackingField: 0
+  _interactPosition: {fileID: 1891383470}
+  <Clip>k__BackingField: {fileID: -203655887218126122, guid: 627666820bce7fb41bbdab052d761f88, type: 3}
+  <ClipSpeed>k__BackingField: 2
+  <UseRootAnimation>k__BackingField: 1
+  <ClipRepositionDuration>k__BackingField: 0.1
   InteractSuccessEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 622053812}
+        m_TargetAssemblyTypeName: Kabir.InteractableController, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 622053815}
+        m_TargetAssemblyTypeName: Kabir.CountdownController, Assembly-CSharp
+        m_MethodName: StartCountdown
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!135 &622053813
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4006,7 +4034,51 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!114 &622053814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622053810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3886089e1bba945a608a5ef380d304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _runOnAwake: 0
+  _countdown: 0
+--- !u!114 &622053815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622053810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 652c1025323440547b2fbec9cf6a3257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 5
+  _remainingDuration: 0
+  OnCompleteEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 622053812}
+        m_TargetAssemblyTypeName: Kabir.InteractableController, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  _runOnStart: 0
 --- !u!1 &680038140
 GameObject:
   m_ObjectHideFlags: 0
@@ -5533,9 +5605,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentInteractable: {fileID: 0}
   _allowInteract: 1
-  _blockingLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &1143853105
 GameObject:
   m_ObjectHideFlags: 0
@@ -6732,7 +6801,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4489046620515528, guid: 90fb214880065ca44be9cb53bcbd6780, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4489046620515528, guid: 90fb214880065ca44be9cb53bcbd6780, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7970,6 +8039,37 @@ MonoBehaviour:
   _exitMenuPanel: {fileID: 1860640404}
   _eventSystem: {fileID: 545263351}
   _firstSelected: {fileID: 1991733044}
+--- !u!1 &1891383469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1891383470}
+  m_Layer: 0
+  m_Name: InteractPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1891383470
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891383469}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.000000059604645}
+  m_LocalPosition: {x: 0.000000059604645, y: 0, z: 1.0000005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 622053811}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1892890654
 GameObject:
   m_ObjectHideFlags: 0

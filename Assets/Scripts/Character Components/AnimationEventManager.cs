@@ -41,5 +41,13 @@ namespace Kabir.CharacterComponents
         }
 
         #endregion
+
+        #region Interact
+
+        public event UnityAction OnInteractStart;
+
+        protected void AnimInteractStart(int index) => OnInteractStart?.Invoke();
+
+        #endregion
     }
 }

@@ -32,6 +32,11 @@ namespace Kabir
         /// </summary>
         [field: SerializeField, BoxGroup("Interact Animation")] public bool UseRootAnimation { get; private set; } = false;
 
+        /// <summary>
+        /// Duration percentage of when the character "moves" from it's starting position to interact position (0-100%)
+        /// </summary>
+        [field: SerializeField, BoxGroup("Interact Animation"), Range(0f, 1f)] public float ClipRepositionDuration { get; private set; } = 0.1f;
+
         public event UnityAction<GameObject> InteractSuccess;
         public UnityEvent<GameObject> InteractSuccessEvent;
 
